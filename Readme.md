@@ -1,4 +1,6 @@
 # PULUMI DEMO
+## Description
+This example creates a file from template in GCS
 
 ## Running the example
 
@@ -8,6 +10,8 @@ Execute the following bash command in order to setup the enviroment.
 export CREDENTIALS_FILE="/Users/omar/Downloads/EXAMPLE-1bf0619764f8.json"
 export CREDENTIALS=$(cat $CREDENTIALS_FILE)
 export PULUMI_ACCESS_TOKEN="zzzz"
+export GOOGLE_PROJECT="XXX"
+export GREETING="Hello World"
 ```
 
 Pulumi requires access token in order to save state, you can get one at https://app.pulumi.com/
