@@ -63,7 +63,7 @@ func main() {
 		RolesList[0] = "READER:allUsers"
 
 		//Set as public the uploaded file to GCS
-		if _, err := storage.NewObjectACL(ctx, "index.html", &storage.ObjectACLArgs{
+		if _, err := storage.NewObjectACL(ctx, "indexAllUsers", &storage.ObjectACLArgs{
 			Bucket:       bucket.ID(),
 			Object:       gcsObject.Name(),
 			RoleEntities: RolesList,
