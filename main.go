@@ -35,19 +35,26 @@ func generateFile() error {
 	return nil
 }
 
+func createBucket(ctx *pulumi.Context, StorageClass string) (*storage.Bucket, error) {
+	bucket, err := storage.NewBucket(ctx, "pulumibucket", &storage.BucketArgs{
+		ForceDestroy: true,
+		StorageClass: StorageClass,
+		Name:         "my-bucket-pulumi-poc-olopez",
+	})
+	if err != nil {
+		return bucket, err
+	}
+	return bucket, nil
+}
+
 func main() {
 	//Generate file from given template
 	generateFile()
 
 	pulumi.Run(func(ctx *pulumi.Context) error {
-		// Create a GCP resource (Storage Bucket)
-		bucket, err := storage.NewBucket(ctx, "my-bucket", &storage.BucketArgs{
-			ForceDestroy: true,
-			StorageClass: "COLDLINE",
-		})
-		if err != nil {
-			return err
-		}
+		// Create a GCP resource (Storage Bucket) example extractig to a func
+		bucket, err := createBucket(ctx, "COLDLINE")
+
 		// Create a GCS Object from the template
 		gcsObject, err := storage.NewBucketObject(ctx, "index.html", &storage.BucketObjectArgs{
 			Bucket:      bucket.ID(),
