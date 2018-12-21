@@ -49,11 +49,24 @@ func main() {
 			return err
 		}
 		// Create a GCS Object from the template
-		if _, err := storage.NewBucketObject(ctx, "index.html", &storage.BucketObjectArgs{
+		gcsObject, err := storage.NewBucketObject(ctx, "index.html", &storage.BucketObjectArgs{
 			Bucket:      bucket.ID(),
 			Source:      "/tmp/index.html",
 			Name:        "index.html",
 			ContentType: mime.TypeByExtension(path.Ext("index.html")), // set the MIME type of the file
+		})
+		if err != nil {
+			return err
+		}
+
+		var RolesList [1]string
+		RolesList[0] = "READER:allUsers"
+
+		//Set as public the uploaded file to GCS
+		if _, err := storage.NewObjectACL(ctx, "index.html", &storage.ObjectACLArgs{
+			Bucket:       bucket.ID(),
+			Object:       gcsObject.Name(),
+			RoleEntities: RolesList,
 		}); err != nil {
 			return err
 		}
