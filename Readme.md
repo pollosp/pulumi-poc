@@ -1,6 +1,6 @@
 # PULUMI DEMO
 ## Description
-This example creates a file from template in GCS
+This example creates a file from template in GCS displaying the `GREETING` variable
 
 ## Running the example
 
